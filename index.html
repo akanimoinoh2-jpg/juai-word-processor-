@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JUAI Word Processor</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .toolbar {
+            background: #ecf0f1;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        button, select {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        #editor {
+            height: 500px;
+            margin: 10px;
+            padding: 15px;
+            background: white;
+            border: 1px solid #ccc;
+            overflow-y: auto;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #2c3e50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<header>JUAI Word Processor</header>
+
+<div class="toolbar">
+    <button onclick="format('bold')">Bold</button>
+    <button onclick="format('italic')">Italic</button>
+    <button onclick="format('underline')">Underline</button>
+
+    <select onchange="format('fontName', this.value)">
+        <option value="">Font</option>
+        <option value="Arial">Arial</option>
+        <option value="Courier New">Courier</option>
+        <option value="Times New Roman">Times</option>
+    </select>
+
+    <select onchange="format('fontSize', this.value)">
+        <option value="">Size</option>
+        <option value="1">Small</option>
+        <option value="3">Normal</option>
+        <option value="5">Large</option>
+        <option value="7">Huge</option>
+    </select>
+
+    <button onclick="format('justifyLeft')">Left</button>
+    <button onclick="format('justifyCenter')">Center</button>
+    <button onclick="format('justifyRight')">Right</button>
+
+    <button onclick="saveFile()">Save</button>
+    <button onclick="clearEditor()">Clear</button>
+</div>
+
+<div id="editor" contenteditable="true">
+    Start typing your document here...
+</div>
+
+<footer>JUAI © 2026</footer>
+
+<script>
+    function format(command, value = null) {
+        document.execCommand(command, false, value);
+    }
+
+    function saveFile() {
+        let text = document.getElementById("editor").innerText;
+        let blob = new Blob([text], { type: "text/plain" });
+        let link = document.createElement("a");
+
+        link.href = URL.createObjectURL(blob);
+        link.download = "JUAI_Document.txt";
+        link.click();
+    }
+
+    function clearEditor() {
+        document.getElementById("editor").innerHTML = "";
+    }
+</script>
+
+</body>
+</html>
